@@ -29,8 +29,8 @@ public class Author {
     String email;
 
     @UpdateTimestamp
-    Date lastactivity;
+    Date lastActivity;
 
-    @OneToMany(mappedBy = "Book" , cascade = CascadeType.ALL)
-    ArrayList<Book> books = new ArrayList<Book>();
+    @OneToMany(mappedBy = "author" , cascade = CascadeType.ALL)
+    ArrayList<Book> books = new ArrayList<>();
 }

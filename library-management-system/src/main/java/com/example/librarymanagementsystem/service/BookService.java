@@ -5,9 +5,11 @@ import com.example.librarymanagementsystem.model.Author;
 import com.example.librarymanagementsystem.model.Book;
 import com.example.librarymanagementsystem.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class BookService {
 
     @Autowired

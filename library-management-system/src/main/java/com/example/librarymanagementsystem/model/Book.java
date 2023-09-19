@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
@@ -26,7 +29,12 @@ public class Book {
 
     double cost;
 
+    boolean issued; // to check weather book is issued or not at present time
+
     @ManyToOne
     @JoinColumn
     Author author;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    List<Transaction> transactions = new ArrayList<>();
 }
