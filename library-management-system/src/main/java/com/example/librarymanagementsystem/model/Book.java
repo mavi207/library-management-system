@@ -21,9 +21,10 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
+    @Column(unique = true , nullable = false)
     String name;
 
-    int numberofpages;
+    int numberOfPages;
 
     @Enumerated(EnumType.STRING)
     Genre genre;
