@@ -2,6 +2,8 @@ package com.example.librarymanagementsystem.service;
 
 import com.example.librarymanagementsystem.Enum.CardStatus;
 import com.example.librarymanagementsystem.Enum.Gender;
+import com.example.librarymanagementsystem.dto.requestDTO.StudentRequest;
+import com.example.librarymanagementsystem.dto.responseDTO.StudentResponse;
 import com.example.librarymanagementsystem.model.LibraryCard;
 import com.example.librarymanagementsystem.model.Student;
 import com.example.librarymanagementsystem.repository.StudentRepository;
@@ -18,14 +20,28 @@ public class StudentService {
     @Autowired
     StudentRepository studentRepository;
 
-    public Student addStudent(Student student) {
+    public StudentResponse addStudent(StudentRequest studentRequest) {
+
+        Student student = new Student();
+        student.setName(studentRequest.getName());
+        student.setAge(studentRequest.getAge());
+        student.setEmail(studentRequest.getEmail());
+        student.setGender(studentRequest.getGender());
+
         LibraryCard libraryCard=new LibraryCard();
         libraryCard.setCardNo(String.valueOf(UUID.randomUUID()));
         libraryCard.setCardstatus(CardStatus.Active);
         libraryCard.setStudent(student);
-        student.setLibraryCard(libraryCard);// set librarycard for student
+        student.setLibraryCard(libraryCard);// set library card for student
         Student savedStudent = studentRepository.save(student);// save both student and library card
-        return savedStudent;
+
+        StudentResponse studentResponse = new StudentResponse();
+        studentResponse.setName(savedStudent.getName());
+        studentResponse.setEmail(savedStudent.getEmail());
+        studentResponse.setMessage("Task Completed..");
+        studentResponse.setCardIssueNumber(savedStudent.getLibraryCard().getCardNo());
+
+        return studentResponse;
     }
 
     public Student getStudent(int regNo) {

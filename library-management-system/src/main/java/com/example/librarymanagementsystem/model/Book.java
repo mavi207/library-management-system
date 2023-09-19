@@ -1,5 +1,6 @@
 package com.example.librarymanagementsystem.model;
 
+import com.example.librarymanagementsystem.Enum.BookStatus;
 import com.example.librarymanagementsystem.Enum.Genre;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,7 +30,8 @@ public class Book {
 
     double cost;
 
-    boolean issued; // to check weather book is issued or not at present time
+    @Enumerated(value = EnumType.STRING)
+    BookStatus issued; // to check weather book is issued or not at present time
 
     @ManyToOne
     @JoinColumn

@@ -1,5 +1,7 @@
 package com.example.librarymanagementsystem.controller;
 
+import com.example.librarymanagementsystem.dto.requestDTO.StudentRequest;
+import com.example.librarymanagementsystem.dto.responseDTO.StudentResponse;
 import com.example.librarymanagementsystem.model.Student;
 import com.example.librarymanagementsystem.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,9 @@ public class StudentController {
     StudentService studentService;
 
     @PostMapping("/add")
-    public ResponseEntity addStudent(@RequestBody Student student){
-        Student str=studentService.addStudent(student);
-        return new ResponseEntity(str, HttpStatus.CREATED);
+    public ResponseEntity addStudent(@RequestBody StudentRequest studentRequest){
+        StudentResponse response =studentService.addStudent(studentRequest);
+        return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/get")
@@ -59,6 +61,8 @@ public class StudentController {
     // find by email
 
     // find by email and gender
+
+    // block a library card soo he cannot take any book
 
 
 

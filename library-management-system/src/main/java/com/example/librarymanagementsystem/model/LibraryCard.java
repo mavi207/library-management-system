@@ -25,7 +25,7 @@ public class LibraryCard {
 
     @Enumerated(EnumType.STRING)
     @Column(name="statusOfCard")
-    CardStatus cardstatus;
+    CardStatus cardstatus = CardStatus.Active ;
 
     @CreationTimestamp
     Date issuedate;
