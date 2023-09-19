@@ -24,7 +24,7 @@ public class AuthorController {
 
     // update the email id of an author  -->> observer lastActivity column
 
-    // Give me the names of all the books written by a partiular author
+    // Give me the names of all the books written by a particular author
 
     // give me the names of authors who have written more than 'x' number of books
 }

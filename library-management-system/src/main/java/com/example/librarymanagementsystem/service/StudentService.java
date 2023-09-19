@@ -2,8 +2,8 @@ package com.example.librarymanagementsystem.service;
 
 import com.example.librarymanagementsystem.Enum.CardStatus;
 import com.example.librarymanagementsystem.Enum.Gender;
-import com.example.librarymanagementsystem.dto.requestDTO.StudentRequest;
-import com.example.librarymanagementsystem.dto.responseDTO.StudentResponse;
+import com.example.librarymanagementsystem.dto.requestDTO.StudentRequestDTO;
+import com.example.librarymanagementsystem.dto.responseDTO.StudentResponseDTO;
 import com.example.librarymanagementsystem.model.LibraryCard;
 import com.example.librarymanagementsystem.model.Student;
 import com.example.librarymanagementsystem.repository.StudentRepository;
@@ -20,7 +20,7 @@ public class StudentService {
     @Autowired
     StudentRepository studentRepository;
 
-    public StudentResponse addStudent(StudentRequest studentRequest) {
+    public StudentResponseDTO addStudent(StudentRequestDTO studentRequest) {
 
         Student student = new Student();
         student.setName(studentRequest.getName());
@@ -35,7 +35,7 @@ public class StudentService {
         student.setLibraryCard(libraryCard);// set library card for student
         Student savedStudent = studentRepository.save(student);// save both student and library card
 
-        StudentResponse studentResponse = new StudentResponse();
+        StudentResponseDTO studentResponse = new StudentResponseDTO();
         studentResponse.setName(savedStudent.getName());
         studentResponse.setEmail(savedStudent.getEmail());
         studentResponse.setMessage("Task Completed..");
