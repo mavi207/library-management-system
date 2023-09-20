@@ -14,6 +14,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "author")
 public class Author {
 

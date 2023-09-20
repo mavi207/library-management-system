@@ -32,7 +32,7 @@ public class Book {
     double cost;
 
     @Enumerated(value = EnumType.STRING)
-    BookStatus issued; // to check weather book is issued or not at present time
+    BookStatus issued = BookStatus.Available; // to check weather book is issued or not at present time
 
     @ManyToOne
     @JoinColumn

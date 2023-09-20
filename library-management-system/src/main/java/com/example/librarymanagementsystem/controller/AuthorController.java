@@ -1,6 +1,7 @@
 package com.example.librarymanagementsystem.controller;
 
-import com.example.librarymanagementsystem.model.Author;
+import com.example.librarymanagementsystem.dto.requestDTO.AuthorRequestDTO;
+import com.example.librarymanagementsystem.dto.responseDTO.AuthorResponseDTO;
 import com.example.librarymanagementsystem.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +16,8 @@ public class AuthorController {
     AuthorService authorService;
 
     @PostMapping("/add")
-    public ResponseEntity addAuthor(@RequestParam Author author){
-        String response = authorService.addAuthor(author);
+    public ResponseEntity addAuthor(@RequestParam AuthorRequestDTO authorRequestDTO){
+        AuthorResponseDTO response = authorService.addAuthor(authorRequestDTO);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

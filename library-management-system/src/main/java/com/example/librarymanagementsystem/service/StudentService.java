@@ -72,4 +72,46 @@ public class StudentService {
         List<Student> maleList=studentRepository.findByGender(Gender.Male);
         return maleList;
     }
+
+    public List<Student> getAllStudents() {
+        List<Student> students = studentRepository.findAll();
+        return students;
+    }
+
+    public Student findByEmail(String email) {
+        Student student = studentRepository.findByEmail(email);
+        return student;
+    }
+
+    public Student findByEmailandGender(String email, Gender gender) {
+        Student student = studentRepository.findByEmailAndGender(email,gender);
+        return student;
+    }
+
+    public Student blockLibraryCard(int regNo) {
+
+        Optional<Student> student = studentRepository.findById(regNo);
+        if(student==null){
+            return null;
+        }
+
+        Student responseStudent = student.get();
+        responseStudent.getLibraryCard().setCardstatus(CardStatus.Blocked);
+        studentRepository.save(responseStudent);
+        return responseStudent;
+    }
+
+    public Student activeLibraryCard(int regNo) {
+
+        Optional<Student> student = studentRepository.findById(regNo);
+        if(student==null){
+            return null;
+        }
+
+        Student responseStudent = student.get();
+        responseStudent.getLibraryCard().setCardstatus(CardStatus.Active);
+        studentRepository.save(responseStudent);
+        return responseStudent;
+
+    }
 }
