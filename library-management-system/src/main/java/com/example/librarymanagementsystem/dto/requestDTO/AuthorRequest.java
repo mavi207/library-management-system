@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AuthorRequestDTO {
+public class AuthorRequest {
     String name;
 
     int age;

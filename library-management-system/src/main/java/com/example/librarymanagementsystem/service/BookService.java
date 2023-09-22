@@ -1,7 +1,7 @@
 package com.example.librarymanagementsystem.service;
 
 import com.example.librarymanagementsystem.Enum.Genre;
-import com.example.librarymanagementsystem.dto.responseDTO.BookResponseDTO;
+import com.example.librarymanagementsystem.dto.responseDTO.BookResponse;
 import com.example.librarymanagementsystem.exception.AuthorNotFoundException;
 import com.example.librarymanagementsystem.exception.BookNotFoundException;
 import com.example.librarymanagementsystem.model.Author;
@@ -24,24 +24,24 @@ public class BookService {
     @Autowired
     BookRepository bookRepository;
 
-    public List<BookResponseDTO> bookOfGenre(Genre genre) {
+    public List<BookResponse> bookOfGenre(Genre genre) {
         List<Book> books = bookRepository.findByGenre(genre);
 
-        List<BookResponseDTO> bookResponseDTOS = new ArrayList<>();
+        List<BookResponse> bookResponses = new ArrayList<>();
 
         for(Book book : books){
-            BookResponseDTO bookResponseDTO = new BookResponseDTO();
+            BookResponse bookResponse = new BookResponse();
 
-            bookResponseDTO.setName(book.getName());
-            bookResponseDTO.setNumberOfPages(book.getNumberOfPages());
-            bookResponseDTO.setGenre(book.getGenre());
-            bookResponseDTO.setCost(book.getCost());
-            bookResponseDTO.setIssued(book.getIssued());
-            bookResponseDTO.setAuthor(book.getAuthor().getName());
+            bookResponse.setName(book.getName());
+            bookResponse.setNumberOfPages(book.getNumberOfPages());
+            bookResponse.setGenre(book.getGenre());
+            bookResponse.setCost(book.getCost());
+            bookResponse.setIssued(book.getIssued());
+            bookResponse.setAuthor(book.getAuthor().getName());
 
-            bookResponseDTOS.add(bookResponseDTO);
+            bookResponses.add(bookResponse);
         }
-        return bookResponseDTOS;
+        return bookResponses;
     }
 
     public String addBook(Book book) {
@@ -58,36 +58,36 @@ public class BookService {
         return "Book added successfully";
     }
 
-    public List<BookResponseDTO> getBooksByGenreAndGreaterThanCost(String genre, double cost) {
+    public List<BookResponse> getBooksByGenreAndGreaterThanCost(String genre, double cost) {
         List<Book> books = bookRepository.getBooksByGenreAndGreaterThanCost(genre,cost);
 
-        List<BookResponseDTO> bookResponseDTOS = new ArrayList<>();
+        List<BookResponse> bookResponses = new ArrayList<>();
         for(Book book : books){
-            BookResponseDTO bookResponseDTO = new BookResponseDTO();
-            bookResponseDTO.setName(book.getName());
-            bookResponseDTO.setNumberOfPages(book.getNumberOfPages());
-            bookResponseDTO.setGenre(book.getGenre());
-            bookResponseDTO.setCost(book.getCost());
-            bookResponseDTO.setIssued(book.getIssued());
-            bookResponseDTO.setAuthor(book.getAuthor().getName());
+            BookResponse bookResponse = new BookResponse();
+            bookResponse.setName(book.getName());
+            bookResponse.setNumberOfPages(book.getNumberOfPages());
+            bookResponse.setGenre(book.getGenre());
+            bookResponse.setCost(book.getCost());
+            bookResponse.setIssued(book.getIssued());
+            bookResponse.setAuthor(book.getAuthor().getName());
         }
-        return bookResponseDTOS;
+        return bookResponses;
     }
 
-    public List<BookResponseDTO> getBooksBetweenPages(int minPage, int maxPage) {
+    public List<BookResponse> getBooksBetweenPages(int minPage, int maxPage) {
         List<Book> books = bookRepository.getBooksBetweenPages(minPage,maxPage);
 
-        List<BookResponseDTO> bookResponseDTOS = new ArrayList<>();
+        List<BookResponse> bookResponses = new ArrayList<>();
         for(Book book : books){
-            BookResponseDTO bookResponseDTO = new BookResponseDTO();
-            bookResponseDTO.setName(book.getName());
-            bookResponseDTO.setNumberOfPages(book.getNumberOfPages());
-            bookResponseDTO.setGenre(book.getGenre());
-            bookResponseDTO.setCost(book.getCost());
-            bookResponseDTO.setIssued(book.getIssued());
-            bookResponseDTO.setAuthor(book.getAuthor().getName());
+            BookResponse bookResponse = new BookResponse();
+            bookResponse.setName(book.getName());
+            bookResponse.setNumberOfPages(book.getNumberOfPages());
+            bookResponse.setGenre(book.getGenre());
+            bookResponse.setCost(book.getCost());
+            bookResponse.setIssued(book.getIssued());
+            bookResponse.setAuthor(book.getAuthor().getName());
         }
-        return bookResponseDTOS;
+        return bookResponses;
     }
 
 

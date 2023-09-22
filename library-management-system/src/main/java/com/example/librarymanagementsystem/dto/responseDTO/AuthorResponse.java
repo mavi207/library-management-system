@@ -3,17 +3,21 @@ package com.example.librarymanagementsystem.dto.responseDTO;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Date;
+
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class StudentResponseDTO {
+@Builder
+public class AuthorResponse {
+
     String name;
+
+    int age;
 
     String email;
 
-    String message;
-
-    String cardIssueNumber;
+    Date lastActivity;
 }

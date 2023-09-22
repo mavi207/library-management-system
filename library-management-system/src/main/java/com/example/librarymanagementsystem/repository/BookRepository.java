@@ -1,7 +1,6 @@
 package com.example.librarymanagementsystem.repository;
 
 import com.example.librarymanagementsystem.Enum.Genre;
-import com.example.librarymanagementsystem.dto.responseDTO.BookResponseDTO;
 import com.example.librarymanagementsystem.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
