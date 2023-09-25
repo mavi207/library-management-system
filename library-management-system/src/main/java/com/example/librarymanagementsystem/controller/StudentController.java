@@ -4,7 +4,7 @@ import com.example.librarymanagementsystem.Enum.Gender;
 import com.example.librarymanagementsystem.dto.requestDTO.StudentRequest;
 import com.example.librarymanagementsystem.dto.responseDTO.StudentResponse;
 import com.example.librarymanagementsystem.model.Student;
-import com.example.librarymanagementsystem.service.StudentService;
+import com.example.librarymanagementsystem.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +17,17 @@ import java.util.List;
 public class StudentController {
 
     @Autowired
-    StudentService studentService;
+    StudentServiceImpl studentServiceImpl;
 
     @PostMapping("/add")
     public ResponseEntity addStudent(@RequestBody StudentRequest studentRequest){
-        StudentResponse response =studentService.addStudent(studentRequest);
+        StudentResponse response = studentServiceImpl.addStudent(studentRequest);
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/get")
     public ResponseEntity getStudent(@RequestParam("id") int regNo){
-        Student student=studentService.getStudent(regNo);
+        Student student= studentServiceImpl.getStudent(regNo);
         if(student==null){
             return new ResponseEntity("Invalid Student id!!",HttpStatus.NOT_FOUND);
         }
@@ -37,22 +37,22 @@ public class StudentController {
     // update the age of a student  ---> regNo, age
     @PutMapping("/updateage")
     public ResponseEntity updateAge(@RequestParam("id")int regNo,@RequestParam("age")int age){
-        Student student=studentService.getStudent(regNo);
+        Student student= studentServiceImpl.getStudent(regNo);
         if(student==null){
             return new ResponseEntity("Invalid Student id!!",HttpStatus.NOT_ACCEPTABLE);
         }
-        studentService.updateAge(regNo,age);
+        studentServiceImpl.updateAge(regNo,age);
         return new ResponseEntity("Age Successfully Updated!!",HttpStatus.ACCEPTED);
     }
 
     // delete a student --> regNo
     @DeleteMapping("/delete")
     public ResponseEntity deleteStudent(@RequestParam("id") int regNo){
-        Student student=studentService.getStudent(regNo);
+        Student student= studentServiceImpl.getStudent(regNo);
         if(student==null){
             return new ResponseEntity("Invalid Student id!!",HttpStatus.NOT_ACCEPTABLE);
         }
-        studentService.deleteStudent(regNo);
+        studentServiceImpl.deleteStudent(regNo);
         return new ResponseEntity("Sucessfully Deleted!!",HttpStatus.ACCEPTED);
     }
 
@@ -60,14 +60,14 @@ public class StudentController {
     // get all the students in the db
     @GetMapping("/get-all-student")
     public List<Student> getAllStudents(){
-        List<Student> students =studentService.getAllStudents();
+        List<Student> students = studentServiceImpl.getAllStudents();
         return students;
     }
 
     // find by email
     @GetMapping("/findby")
     public ResponseEntity findByEmail(@RequestParam("email") String email){
-       Student student = studentService.findByEmail(email);
+       Student student = studentServiceImpl.findByEmail(email);
 
        if(student==null)
        return new ResponseEntity<>("Not Found email incorrect!!",HttpStatus.NOT_FOUND);
@@ -78,7 +78,7 @@ public class StudentController {
     // find by email and gender
     @GetMapping("/findby")
     public ResponseEntity findByEmailandGender(@RequestParam("email") String email, @RequestParam("gender") Gender gender){
-        Student student = studentService.findByEmailandGender(email,gender);
+        Student student = studentServiceImpl.findByEmailandGender(email,gender);
 
         if(student==null)
             return new ResponseEntity<>("Not Found email or gender incorrect!!",HttpStatus.NOT_FOUND);
@@ -91,7 +91,7 @@ public class StudentController {
     // block a library card soo he cannot take any book
     @PutMapping("/block-card")
     public ResponseEntity blockLibraryCard(@RequestParam("id")int regNo){
-        Student student=studentService.blockLibraryCard(regNo);
+        Student student= studentServiceImpl.blockLibraryCard(regNo);
         if(student==null){
             return new ResponseEntity("Invalid Student id!!",HttpStatus.NOT_ACCEPTABLE);
         }
@@ -100,7 +100,7 @@ public class StudentController {
 
     @PutMapping("/active-card")
     public ResponseEntity activeLibraryCard(@RequestParam("id")int regNo){
-        Student student=studentService.activeLibraryCard(regNo);
+        Student student= studentServiceImpl.activeLibraryCard(regNo);
         if(student==null){
             return new ResponseEntity("Invalid Student id!!",HttpStatus.NOT_ACCEPTABLE);
         }
@@ -111,7 +111,7 @@ public class StudentController {
     // get list of all male students
     @GetMapping("/get-male")
     public List<Student> getMale(){
-        List<Student> maleList= studentService.getMale();
+        List<Student> maleList= studentServiceImpl.getMale();
         return maleList;
     }
 

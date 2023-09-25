@@ -4,7 +4,7 @@ import com.example.librarymanagementsystem.Enum.Genre;
 import com.example.librarymanagementsystem.dto.responseDTO.BookResponse;
 import com.example.librarymanagementsystem.exception.BookNotFoundException;
 import com.example.librarymanagementsystem.model.Book;
-import com.example.librarymanagementsystem.service.BookService;
+import com.example.librarymanagementsystem.service.impl.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +17,12 @@ import java.util.List;
 public class BookController {
 
     @Autowired
-    BookService bookService;
+    BookServiceImpl bookServiceImpl;
 
     @PostMapping("/add")
     public String addBook(@RequestBody Book book){
         try{
-            String response = bookService.addBook(book);
+            String response = bookServiceImpl.addBook(book);
             return response;
         }
         catch(Exception e){
@@ -34,7 +34,7 @@ public class BookController {
     @DeleteMapping("/delete")
     public ResponseEntity deleteBook(@RequestParam("id") int bookId){
         try{
-            String response = bookService.deleteBook(bookId);
+            String response = bookServiceImpl.deleteBook(bookId);
             return new ResponseEntity(response,HttpStatus.ACCEPTED);
         }
         catch (BookNotFoundException e){
@@ -48,7 +48,7 @@ public class BookController {
     // give me names of all the books of a particular genre
     @GetMapping("/books-genre")
     public List<BookResponse> bookOfGenre(@RequestParam("genre") Genre genre){
-        List<BookResponse> books = bookService.bookOfGenre(genre);
+        List<BookResponse> books = bookServiceImpl.bookOfGenre(genre);
         return books;
     }
 
@@ -56,14 +56,14 @@ public class BookController {
     @GetMapping("/get-by-genre-cost")
     public List<BookResponse> getBooksByGenreAndGreaterThanCost(@RequestParam("genre") String genre, @RequestParam("cost") double cost)// this is implemented using SQL
     {
-        return bookService.getBooksByGenreAndGreaterThanCost(genre,cost);
+        return bookServiceImpl.getBooksByGenreAndGreaterThanCost(genre,cost);
     }
 
     // give me all the books having number of pages between 'a' and 'b'
     @GetMapping("/get-between-pages")
     public List<BookResponse> getBooksBetweenPages(@RequestParam("minpage") int minPage, @RequestParam("maxpage") int maxPage)// this is implemented using HQL
     {
-        return bookService.getBooksBetweenPages(minPage,maxPage);
+        return bookServiceImpl.getBooksBetweenPages(minPage,maxPage);
     }
 
     // give me the names of all the authors who write a particular genre
