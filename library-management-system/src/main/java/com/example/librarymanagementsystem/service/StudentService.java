@@ -11,7 +11,7 @@ public interface StudentService {
 
     public StudentResponse addStudent(StudentRequest studentRequest);
 
-    public Student getStudent(int regNo) ;
+    public StudentResponse getStudent(int regNo) ;
 
 
     public Student updateAge(int regNo, int age) ;
@@ -20,11 +20,11 @@ public interface StudentService {
 
     public List<Student> getMale() ;
 
-    public List<Student> getAllStudents() ;
+    public List<StudentResponse> getAllStudents() ;
 
-    public Student findByEmail(String email) ;
+    public StudentResponse findByEmail(String email) ;
 
-    public Student findByEmailandGender(String email, Gender gender) ;
+    public Student findByEmailAndGender(String email, Gender gender) ;
 
     public Student blockLibraryCard(int regNo) ;
 

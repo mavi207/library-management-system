@@ -4,6 +4,7 @@ import com.example.librarymanagementsystem.Enum.CardStatus;
 import com.example.librarymanagementsystem.Enum.Gender;
 import com.example.librarymanagementsystem.dto.requestDTO.StudentRequest;
 import com.example.librarymanagementsystem.dto.responseDTO.StudentResponse;
+import com.example.librarymanagementsystem.exception.StudentNotFoundException;
 import com.example.librarymanagementsystem.model.LibraryCard;
 import com.example.librarymanagementsystem.model.Student;
 import com.example.librarymanagementsystem.repository.StudentRepository;
@@ -11,9 +12,13 @@ import com.example.librarymanagementsystem.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static com.example.librarymanagementsystem.transformer.StudentTransformer.StudentRequestToStudent;
+import static com.example.librarymanagementsystem.transformer.StudentTransformer.StudentToStudentResponse;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -23,11 +28,7 @@ public class StudentServiceImpl implements StudentService {
 
     public StudentResponse addStudent(StudentRequest studentRequest) {
 
-        Student student = new Student();
-        student.setName(studentRequest.getName());
-        student.setAge(studentRequest.getAge());
-        student.setEmail(studentRequest.getEmail());
-        student.setGender(studentRequest.getGender());
+        Student student = StudentRequestToStudent(studentRequest);
 
         LibraryCard libraryCard=new LibraryCard();
         libraryCard.setCardNo(String.valueOf(UUID.randomUUID()));
@@ -36,21 +37,16 @@ public class StudentServiceImpl implements StudentService {
         student.setLibraryCard(libraryCard);// set library card for student
         Student savedStudent = studentRepository.save(student);// save both student and library card
 
-        StudentResponse studentResponse = new StudentResponse();
-        studentResponse.setName(savedStudent.getName());
-        studentResponse.setEmail(savedStudent.getEmail());
-        studentResponse.setMessage("Task Completed..");
-        studentResponse.setCardIssueNumber(savedStudent.getLibraryCard().getCardNo());
-
-        return studentResponse;
+        return StudentToStudentResponse(savedStudent);
     }
 
-    public Student getStudent(int regNo) {
+    public StudentResponse getStudent(int regNo) {
         Optional<Student> studentOptional = studentRepository.findById(regNo);
-        if (!studentOptional.isPresent()) {
-            return null;
+        if (studentOptional.isEmpty()) {
+            throw new StudentNotFoundException("Invalid Student Id!!");
         }
-        return studentOptional.get();
+        Student student = studentOptional.get();
+        return StudentToStudentResponse(student);
     }
 
 
@@ -74,17 +70,24 @@ public class StudentServiceImpl implements StudentService {
         return maleList;
     }
 
-    public List<Student> getAllStudents() {
+    public List<StudentResponse> getAllStudents() {
         List<Student> students = studentRepository.findAll();
-        return students;
+        List<StudentResponse> studentResponses = new ArrayList<>();
+        for(var ele : students){
+            studentResponses.add(StudentToStudentResponse(ele));
+        }
+        return studentResponses;
     }
 
-    public Student findByEmail(String email) {
+    public StudentResponse findByEmail(String email) {
         Student student = studentRepository.findByEmail(email);
-        return student;
+        if(student==null){
+            throw new StudentNotFoundException("Email id is wrong!!");
+        }
+        return StudentToStudentResponse(student);
     }
 
-    public Student findByEmailandGender(String email, Gender gender) {
+    public Student findByEmailAndGender(String email, Gender gender) {
         Student student = studentRepository.findByEmailAndGender(email,gender);
         return student;
     }
@@ -113,6 +116,5 @@ public class StudentServiceImpl implements StudentService {
         responseStudent.getLibraryCard().setCardstatus(CardStatus.Active);
         studentRepository.save(responseStudent);
         return responseStudent;
-
     }
 }

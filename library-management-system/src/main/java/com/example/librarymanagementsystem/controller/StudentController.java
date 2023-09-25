@@ -27,18 +27,20 @@ public class StudentController {
 
     @GetMapping("/get")
     public ResponseEntity getStudent(@RequestParam("id") int regNo){
-        Student student= studentServiceImpl.getStudent(regNo);
-        if(student==null){
-            return new ResponseEntity("Invalid Student id!!",HttpStatus.NOT_FOUND);
+        try{
+            StudentResponse studentResponse = studentServiceImpl.getStudent(regNo);
+            return new ResponseEntity(studentResponse,HttpStatus.FOUND);
         }
-        return new ResponseEntity(student,HttpStatus.FOUND);
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
     }
 
     // update the age of a student  ---> regNo, age
-    @PutMapping("/updateage")
+    @PutMapping("/update-age")
     public ResponseEntity updateAge(@RequestParam("id")int regNo,@RequestParam("age")int age){
-        Student student= studentServiceImpl.getStudent(regNo);
-        if(student==null){
+        StudentResponse studentResponse = studentServiceImpl.getStudent(regNo);
+        if(studentResponse==null){
             return new ResponseEntity("Invalid Student id!!",HttpStatus.NOT_ACCEPTABLE);
         }
         studentServiceImpl.updateAge(regNo,age);
@@ -48,37 +50,38 @@ public class StudentController {
     // delete a student --> regNo
     @DeleteMapping("/delete")
     public ResponseEntity deleteStudent(@RequestParam("id") int regNo){
-        Student student= studentServiceImpl.getStudent(regNo);
-        if(student==null){
+        StudentResponse studentResponse = studentServiceImpl.getStudent(regNo);
+        if(studentResponse==null){
             return new ResponseEntity("Invalid Student id!!",HttpStatus.NOT_ACCEPTABLE);
         }
         studentServiceImpl.deleteStudent(regNo);
-        return new ResponseEntity("Sucessfully Deleted!!",HttpStatus.ACCEPTED);
+        return new ResponseEntity("Successfully Deleted!!",HttpStatus.ACCEPTED);
     }
 
 
     // get all the students in the db
     @GetMapping("/get-all-student")
-    public List<Student> getAllStudents(){
-        List<Student> students = studentServiceImpl.getAllStudents();
-        return students;
+    public List<StudentResponse> getAllStudents(){
+        List<StudentResponse> studentResponses = studentServiceImpl.getAllStudents();
+        return studentResponses;
     }
 
     // find by email
-    @GetMapping("/findby")
+    @GetMapping("/find-by-email")
     public ResponseEntity findByEmail(@RequestParam("email") String email){
-       Student student = studentServiceImpl.findByEmail(email);
-
-       if(student==null)
-       return new ResponseEntity<>("Not Found email incorrect!!",HttpStatus.NOT_FOUND);
-
-       return new ResponseEntity<>(student, HttpStatus.FOUND);
+        try{
+            StudentResponse studentResponse = studentServiceImpl.findByEmail(email);
+            return new ResponseEntity<>(studentResponse, HttpStatus.FOUND);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
     }
 
     // find by email and gender
-    @GetMapping("/findby")
-    public ResponseEntity findByEmailandGender(@RequestParam("email") String email, @RequestParam("gender") Gender gender){
-        Student student = studentServiceImpl.findByEmailandGender(email,gender);
+    @GetMapping("/find-by-email-gender")
+    public ResponseEntity findByEmailAndGender(@RequestParam("email") String email, @RequestParam("gender") Gender gender){
+        Student student = studentServiceImpl.findByEmailAndGender(email,gender);
 
         if(student==null)
             return new ResponseEntity<>("Not Found email or gender incorrect!!",HttpStatus.NOT_FOUND);

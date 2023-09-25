@@ -12,8 +12,10 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="Student_info")
+@Builder
 public class Student {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int regNo;
 
     @Column(name="student_name")

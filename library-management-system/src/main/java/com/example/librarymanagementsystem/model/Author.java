@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -34,5 +35,5 @@ public class Author {
     Date lastActivity;
 
     @OneToMany(mappedBy = "author" , cascade = CascadeType.ALL)
-    ArrayList<Book> books = new ArrayList<>();
+    List<Book> books = new ArrayList<>();
 }
