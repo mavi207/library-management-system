@@ -2,7 +2,6 @@ package com.example.librarymanagementsystem.controller;
 
 import com.example.librarymanagementsystem.dto.requestDTO.AuthorRequest;
 import com.example.librarymanagementsystem.dto.responseDTO.AuthorResponse;
-import com.example.librarymanagementsystem.model.Book;
 import com.example.librarymanagementsystem.service.impl.AuthorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

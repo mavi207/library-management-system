@@ -6,7 +6,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -15,6 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "transaction")
+@Builder
 public class Transaction {
 
     @Id

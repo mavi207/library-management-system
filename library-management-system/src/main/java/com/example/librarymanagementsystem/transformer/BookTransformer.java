@@ -1,6 +1,5 @@
 package com.example.librarymanagementsystem.transformer;
 
-import com.example.librarymanagementsystem.model.Author;
 import com.example.librarymanagementsystem.model.Book;
 
 import java.util.ArrayList;
